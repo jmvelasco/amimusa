@@ -1,0 +1,54 @@
+<div class="row">
+	<div class="col-md-2 col-sm-2 col-xs-2">
+		<h4 class="text-info">Name:</h4>
+	</div>
+	<div class="col-md-10 col-sm-10 col-xs-10">
+		<h6>###name###</h6>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-2 col-sm-2 col-xs-2">
+		<h4 class="text-info">E-mail:</h4>
+	</div>
+	<div class="col-md-10 col-sm-10 col-xs-10">
+		<h6>###email###</h6>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-2 col-sm-2 col-xs-2">
+		<h4 class="text-info">About me:</h4>
+	</div>
+	<div class="col-md-10 col-sm-10 col-xs-10">
+		<h6>###description###</h6>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-2 col-sm-2 col-xs-2">
+		<h4 class="text-info">Link to profile:</h4>
+	</div>
+	<div class="col-md-10 col-sm-10 col-xs-10">
+		<h6><a target="_blank" href="###link_to_profile###">###link_to_profile###</a></h6>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-2 col-sm-2 col-xs-2">
+		<h4 class="text-info">Musas:</h4>
+	</div>
+	<div class="col-md-10 col-sm-10 col-xs-10">
+		<h6>###musas###</h6>
+	</div>
+</div>
+
+
+<hr />
+<ul class="nav nav-pills">
+  <li><a href="/?target=home" >Go Home</a></li>
+  <li><a href="/?target=update-profile" >Edit</a></li>
+  <li><a href="/?target=user-contributions" >My Contributions</a></li>
+</ul>
+
+

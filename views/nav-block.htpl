@@ -1,0 +1,3 @@
+<ul class="nav nav-pills" style="padding-bottom:12px;">
+  <li><a id="home" href="/index.php?target=home" >Go Home</a></li>
+</ul>

@@ -1,0 +1,9 @@
+<div class="jumbotron">
+  <img src="/images/crash-img.png" alt="error" class="pull-right">
+  <h1>We have a problem</h1>
+  <div style="background: url('/images/error-img.png') no-repeat;width:500px;height:327px;margin-bottom: 20px;">
+  	<p style="position:relative;top:5px;left:280px;width:210px;height:120px;overflow: hidden;" class="text-danger"><small>###error-message###</small></p>
+  </div>
+  
+  <p><a class="btn btn-primary btn-lg" href="/index.php?target=home" role="button">Go back</a></p>
+</div>

@@ -1,0 +1,28 @@
+<form role="form" action="/index.php" method="post">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input name="name" type="text" class="form-control" id="name" value="###name###" required>
+  </div>
+  <!-- 
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input name="username" type="text" class="form-control" id="username" value="###username###" required>
+  </div>
+   -->
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input name="email" type="text" class="form-control" id="email" value="###email###" required />
+  </div>
+  <div class="form-group">
+  	<textarea name="description" class="form-control" rows="3">###description###</textarea>
+  </div>
+  <div class="form-group">
+    <label for="link-to-profile">Link to profile</label>
+    <input name="link-to-profile" type="text" class="form-control" id="link-to-profile" value="###link_to_profile###">
+  </div>
+
+  <input name="target" type="hidden" value="updatecontributor-handler" />
+  <input name="current-user" type="hidden" value="###username###" />
+  <button type="submit" class="btn btn-primary" value="update">Update</button>
+  <a href="/index.php?target=profile" class="btn btn-danger">Cancel</a>
+</form>

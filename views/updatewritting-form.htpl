@@ -1,0 +1,16 @@
+<div class="container">
+	<form id="writting-form" role="form" action="/index.php" method="post">
+	  <div class="form-group">
+	    <label for="name">Title</label>
+	    <input name="title" type="text" class="form-control" id="title" value="###title###" required>
+	  </div>
+	  <div class="form-group">
+	    <label for="body">Your inspiration...</label><span id="body-err"></span>
+	    <textarea name="body" class="form-control" rows="7" id="body">###body###</textarea>
+	  </div>
+	  <input name="target" type="hidden" value="updatewritting-handler" />
+	  <input name="id" type="hidden" value="###id###" />
+      <button id="submit-writting" type="submit" class="btn btn-primary" value="update">Share</button>
+      <a href="/index.php" class="btn btn-danger">Cancel</a>
+	</form>
+</div>

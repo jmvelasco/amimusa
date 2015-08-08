@@ -1,0 +1,27 @@
+<div class="container">
+	<div id="header-nav">
+		<div class="row">
+			<div class="col-xs-8 col-sm-8 col-md-8">
+				<h4 class="navbar-text">
+	    			<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+	    			<span style="margin-left:4px;">Contributor:</span>
+	    			<small><a style="margin-left:6px;" id="profile" href="/?target=profile" class="navbar-link">###username###</a></small>
+				</h4>
+			</div>
+			
+			<div class="col-xs-2 col-sm-2 col-md-2">
+			  <a href="/index.php?target=writting" class="btn btn-success navbar-btn pull-left">I feel inspired!</a>
+			</div>
+			 
+			<div class="col-xs-2 col-sm-2 col-md-2">
+			  <h4 class="navbar-text">
+			      <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+			  <a id="logout" href="/?target=logout" class="navbar-link"><span style="margin-left:4px;">Exit</span></a>
+			  </h4>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-header">
+  <h1>###page-title###</h1>
+</div>
