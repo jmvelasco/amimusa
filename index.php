@@ -31,7 +31,7 @@ switch ($target) {
 		// Set the title for the page
 		$vars['title'] = 'Amimusa Welcome Page';
 		if (isset($_GET['status']) && (1 == $_GET['status'])) {
-			$message = '<div class="alert alert-success">Password updated successfully</div>';
+			$message = '<div class="alert alert-success">Password updated successfully.<br /><small>Please, check your email to confirm the operation.</small></div>';
 		} else {
 			$message = '';
 		}
@@ -49,13 +49,21 @@ switch ($target) {
 		break;
 		
 	case 'remember-password':
-		
 		// Set the title for the page
 		$vars['title'] = 'Remember your password';
 		$content = $service->render('rememberpassword-form');
 	
 		break;
-	
+
+    case 'active-account':
+        $token = $_GET['token'];
+        if ($service->activateContributor($token)) {
+            header('Location: /?target=home');
+        } else {
+            $errorCode = 23440;
+            header('Location: /?target=error-handler&error-code='.$errorCode);
+        }
+        break;
 		
 	case 'home':
 		// Set the title for the page
@@ -372,6 +380,9 @@ switch ($target) {
 			case 23430:
 				$errorMessage = "The e-mail doesn't much with the one the user was registered.";
 				break;
+            case '23440':
+                $errorMessage = "The link is not associated with an activation token.<br> <a href='/index.php?target=remember-password'>Remember Password</a>";
+                break;
 			case 23000:
 				$errorMessage = "There is another user with this username or email. Please choose another one to proceed.";
 				break;

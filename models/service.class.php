@@ -8,35 +8,48 @@ use PDOException;
 class Service
 {
 	private $mdb;
-	
-	public function __construct()
+
+    /**
+     * Create the DB connection instance
+     */
+    public function __construct()
 	{
-		return true;
+		$this->getConnection();
 	}
-	
-	public function getConnection()
+
+    /**
+     * @return PDO
+     */
+    public function getConnection()
 	{
 		if (!isset($this->mdb)) {
 			require_once $_SERVER['DOCUMENT_ROOT'] .  DIRECTORY_SEPARATOR . 'config' .  DIRECTORY_SEPARATOR . 'settings.php';
-			$host 	= $settings['host'];
-			$dbName = $settings['dbName'];
-			$user 	= $settings['user'];
-			$pass 	= $settings['pass'];
-			
-			try {
-				$mdb = new \PDO("mysql:host=$host;dbname=$dbName", $user, $pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-				$mdb->setAttribute(\PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			} catch(\PDOException  $e) {
-				$errorCode = (int)$e->getCode();
-				$error[$errorCode] = $e->getMessage();
-				throw new \PDOException($e);
-			}
-			
-			$this->mdb = $mdb;
-			$this->mdb->beginTransaction();
-		}
+            if (isset($settings)) {
+                $host 	= $settings['host'];
+                $dbName = $settings['dbName'];
+                $user 	= $settings['user'];
+                $pass 	= $settings['pass'];
+
+                try {
+                    $mdb = new \PDO("mysql:host=$host;dbname=$dbName", $user, $pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+                    $mdb->setAttribute(\PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                } catch(\PDOException  $e) {
+                    $errorCode = (int)$e->getCode();
+                    $error[$errorCode] = $e->getMessage();
+                    throw new \PDOException($e);
+                }
+
+                $this->mdb = $mdb;
+                $this->mdb->beginTransaction();
+                return $this->mdb;
+            } else {
+                throw new \PDOException("No settings file found.");
+            }
+		} else {
+            return $this->mdb;
+        }
 		 
-		return $this->mdb;
+
 		
 	}
 	
@@ -49,10 +62,10 @@ class Service
 			$sentencia->bindParam(':email', $email);
 			$sentencia->bindParam(':password', $password);
 		
-			$name = isset($data['name'])?trim($data['name']):'';
-			$username = trim($data['username']);
-			$email = $data['email'];
-			$password = md5($data['password']);
+			$name       = isset($data['name'])?trim($data['name']):'';
+			$username   = trim($data['username']);
+			$email      = $data['email'];
+			$password   = md5($data['password']);
 		
 			try {
 				$sentencia->execute();
@@ -94,18 +107,17 @@ class Service
 		
 		if ($sentencia->rowCount() > 0) {
 			$sentencia = $this->getConnection()->prepare("UPDATE `contributors` SET
-					`password` = ?
+					`password` = ?, `security_token` = ?, `active` = 0
 					 WHERE `username` = ?
 					 AND `email` = ?");
 			
 			$username = isset($data['username'])?trim($data['username']):'';
 			$email = $data['email'];
 			$password = md5($data['password']);
+            $token = md5(uniqid($username, true));
 			
-			$mapping = array($password, $username, $email);
-			
-			//echo $sentencia->queryString;
-			
+			$mapping = array($password, $token, $username, $email);
+
 			try {
 				$sentencia->execute($mapping);
 				$this->getConnection()->commit();
@@ -116,6 +128,16 @@ class Service
 				$this->getConnection()->rollBack();
 				throw new \PDOException($e);
 			}
+
+            $para      = $email;
+            $titulo    = 'Password recovery';
+            $activationLink = 'http://' . $_SERVER['SERVER_NAME'] . '/?target=active-account&token=' . $token;
+            $mensaje   = 'Click on the following link to active your account:' . "\n" . $activationLink;
+            $cabeceras = 'From: no-reply@amimusa.net' . "\r\n" .
+                'Reply-To: no-reply@amimusa.net' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+
+            mail($para, $titulo, $mensaje, $cabeceras);
 			
 			return $errorCode;
 		} else {
@@ -124,6 +146,48 @@ class Service
 		
 
 	}
+
+    public function activateContributor($token)
+    {
+        $sentencia = $this->getConnection()->prepare("SELECT `id`, `username` FROM `contributors` WHERE `security_token` = :token");
+        $sentencia->bindValue(':token', $token);
+
+        try {
+            $sentencia->execute();
+        } catch(\PDOException  $e) {
+            $errorCode = (int)$e->getCode();
+            $error[$errorCode] = $e->getMessage();
+            throw new \PDOException($e);
+        }
+
+        $row = $sentencia->fetch();
+        if (!empty($row)) {
+            $sentencia = $this->getConnection()->prepare("UPDATE `contributors` SET
+					`active` = 1,
+					`security_token` = NULL
+					 WHERE `security_token` = ?");
+
+            $mapping = array($token);
+
+            try {
+                $sentencia->execute($mapping);
+                $this->getConnection()->commit();
+                $errorCode = 1;
+            } catch(\PDOException  $e) {
+                $errorCode = (int)$e->getCode();
+                $error[$errorCode] = $e->getMessage();
+                $this->getConnection()->rollBack();
+                throw new \PDOException($e);
+            }
+
+            $_SESSION['user'] = array('id' => $row['id'], 'name' => $row['username']);
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
 	
 	public function registerWritting($data, $idContributor)
 	{
@@ -181,7 +245,7 @@ class Service
 	
 	public function loginSuccess($data) 
 	{
-		$sentencia = $this->getConnection()->prepare("SELECT `id` FROM `contributors` where `username` = :username and `password` = :password");
+		$sentencia = $this->getConnection()->prepare("SELECT `id` FROM `contributors` where `username` = :username and `password` = :password and `active` = 1");
 		
 		$username = trim($data['username']);
 		$password = md5($data['password']);
@@ -621,9 +685,9 @@ class Service
 		}
 		
 		return $tpl;
-		
 
 	}
+
 	
 	
 }
