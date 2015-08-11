@@ -22,6 +22,18 @@ if (isset($_GET['target'])) {
 }
 
 switch ($target) {
+    case 'send-feedback';
+        $senderName = strip_tags(trim($_POST['feedbackSender']));
+        $comments =  htmlentities(trim($_POST['comments']), ENT_NOQUOTES) . print_r($_POST, true);
+        if ($service->sendFeedback($senderName, $comments)) {
+            die('success');
+        } else {
+            die('error');
+        }
+
+
+        break;
+
 	case 'login':
 		if (isset($_SESSION['user'])) {
 			header('Location: /?target=home');

@@ -20,6 +20,8 @@
     <link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'>
 
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
     <!-- ###extra-js-scripts### -->
 
   </head>
@@ -30,6 +32,22 @@
 
     <div id="suggestion">
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    </div>
+    <div id="suggestion-wrapper">
+        <div id="suggestion-form">
+            <p>Please, send us your feelings about the site.</p>
+            <label>Your name:</label><br>
+            <input type="text" size="20" name="feedback-sender" id="feedback-sender"><br>
+            <label>Comments:</label><br>
+            <textarea cols="45" rows="10" name="comments" id="comments"></textarea>
+            <div class="g-recaptcha" data-sitekey="6LeOIgsTAAAAAH96eYU8NB6FP3FWz9JhlsHMZbyP"></div>
+            <br /> 	<br />
+            <button id="send">Send</button>
+        </div>
+
+        <div id="close-suggestion">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        </div>
     </div>
 
     <div id="beta">
@@ -43,7 +61,45 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $("#suggestion").click(function(){
-                alert("Send an email to ...");
+                $(this).hide();
+                $("#close-suggestion").css('top', '-166px');
+                $("#suggestion-wrapper").animate({left: 100},600,'swing');
+            });
+            $("#close-suggestion").click(function(){
+                $("#suggestion-wrapper").animate({left: -600},600,'swing', function(){
+                    $("#suggestion").show();
+                    $("#comments").val('');
+                    $("#feedback-sender").val('');
+                    $("#suggestion-form").show();
+                    $("#alert-message").remove();
+                    $("#greetings").remove();
+                });
+            });
+            $("#send").click(function(){
+                $("#alert-message").remove();
+                var comments = $.trim($("#comments").val());
+                var feedbackSender = $.trim($("#feedback-sender").val());
+                if ('' != comments) {
+                    $.ajax({
+                        method: "POST",
+                        url: "/index.php?target=send-feedback",
+                        data: { feedbackSender: feedbackSender, comments: comments }
+                    }).done(function( msg ) {
+                        if ('success' == msg) {
+                            $("#suggestion-form").hide();
+                            $("#suggestion-wrapper").prepend('<p id="greetings">Thank you&nbsp'+feedbackSender+'</p>');
+                            $("#close-suggestion").css('top', '-25px');
+                            window.setTimeout(function(){$("#close-suggestion").trigger('click')}, 1600);
+                        } else {
+                            $('<span id="alert-message">Something went wrong.</span>').insertAfter($("#suggestion-form"));
+                        }
+                    });
+                } else {
+                    $('<span id="alert-message">Please, write something.</span>').insertAfter($("#suggestion-form"));
+                    window.setTimeout(function(){$("#alert-message").remove()}, 3600);
+                }
+
+
             });
         });
     </script>
