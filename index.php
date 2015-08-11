@@ -9,8 +9,6 @@ $js[] = '/js/jquery-1.11.3.js';
 $js[] = '/js/audiojs/audio.min.js';
 $js[] = '/js/form-helper.js';
 
-
-
 /**
  * Routing
  */
@@ -226,15 +224,14 @@ switch ($target) {
 	case 'get-publications';
 		$vars['title'] = 'Amimusa: <small>' . strtoupper($_GET['name']) . '</small>';
 		
-		if ($user = key_exists('user', $_SESSION)?$_SESSION['user']:false) {
+		if ($user = in_array('user', $_SESSION)?$_SESSION['user']:false) {
 			$content =  $service->render('header', array(
 					'username' => $user['name'],
 					'page-title' => $vars['title']
 			));
 			$content .= $service->render('nav-block');
-			$result = $service->getMusaPublications($_GET['id']);
-			foreach ($result as $result) {
-				$result['userid'] = $user['id'];
+			$results = $service->getMusaPublications($_GET['id']);
+			foreach ($results as $result) {
 				$content .= $service->render('write-block', $result);
 			}
 		} else {
@@ -244,9 +241,8 @@ switch ($target) {
 			));
 
 			$content .= $service->render('nav-block');
-			$result = $service->getMusaPublications($_GET['id']);
-			foreach ($result as $result) {
-				$result['userid'] = $user['id'];
+			$results = $service->getMusaPublications($_GET['id']);
+			foreach ($results as $result) {
 				$content .= $service->render('write-block', $result);
 			}
 		}

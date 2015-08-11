@@ -74,3 +74,22 @@ body {
 .musas-home {
 	position: relative;
 }
+
+#suggestion {
+    position: fixed;
+    left: 0;
+    top: 300px;
+    width: 20px;
+    overflow: hidden;
+    height: 60px;
+    border: 1px solid #555;
+    border-left: 0px;
+    padding: 3px;
+    cursor: pointer;
+}
+
+#beta {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}

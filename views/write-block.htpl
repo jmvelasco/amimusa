@@ -1,18 +1,14 @@
-<div class="row  pad-top">
-    <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h2 class="panel-title">###title###</h2>
-            </div>
-            <div class="panel-body">
-                ###body###
-            </div>
-            <div class="panel-footer">
-                <div class="row">
-                    <div class="col-md-2 col-md-offset-10">
-                        <small class="pull-right"><a class="btn btn-primary btn-xs" href="/index.php?target=profile&userid=###userid###">###contributor###</a></small>
-                    </div>
-                </div>  
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">###title###</h2>
+    </div>
+    <div class="panel-body">
+        ###body###
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-10">
+                <small class="pull-right"><a class="btn btn-primary btn-xs" href="/index.php?target=profile&userid=###userid###">###contributor###</a></small>
             </div>
         </div>
     </div>

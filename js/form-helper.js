@@ -1,8 +1,9 @@
 audiojs.events.ready(function() {
 	var as = audiojs.createAll();
 });
+
 $(document).ready(function() {
-	
+
 	$('.musas-home').each(function(k,v){
     	var leftPos = (Math.random() * $('#musas-wrapper').width()) + 1 - $(v).find('.musa-name').width() - 50;
     	if (leftPos < 0) leftPos = 0;

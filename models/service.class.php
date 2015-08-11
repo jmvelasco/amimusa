@@ -527,7 +527,8 @@ class Service
 	public function getMusaPublications($idMusa)
 	{
 		$sentencia = $this->getConnection()->prepare("
-				SELECT c.`name` as contributor, 
+				SELECT c.`name` as contributor,
+				       c.id as userid,
 				       w.`title` as title,
 				       w.`body` as body
 				FROM amimusa.publications_musas pm
@@ -650,7 +651,8 @@ class Service
 			$error[$errorCode] = $e->getMessage();
 			throw new \PDOException($e);
 		}
-		
+
+        $res = array();
 		$result = $sentencia->fetchAll();
 		foreach ($result as $r) {
 			$res[] = array(
