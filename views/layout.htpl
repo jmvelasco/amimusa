@@ -22,7 +22,7 @@
 
     <script src='https://www.google.com/recaptcha/api.js'></script>
 
-    <!-- ###extra-js-scripts### -->
+      <!-- ###extra-js-scripts### -->
 
   </head>
   <body>
@@ -35,18 +35,22 @@
     </div>
     <div id="suggestion-wrapper">
         <div id="suggestion-form">
-            <p>Please, send us your feelings about the site.</p>
-            <label>Your name:</label><br>
-            <input type="text" size="20" name="feedback-sender" id="feedback-sender"><br>
-            <label>Comments:</label><br>
-            <textarea cols="45" rows="10" name="comments" id="comments"></textarea>
-            <div class="g-recaptcha" data-sitekey="6LeOIgsTAAAAAH96eYU8NB6FP3FWz9JhlsHMZbyP"></div>
-            <br /> 	<br />
-            <button id="send">Send</button>
-        </div>
+            <div id="close-suggestion">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            </div>
+            <form id="suggestion-formId" method="post">
+                <p>Please, send us your feelings about the site.</p>
+                <label>Your name:</label><br>
+                <input type="text" size="20" name="feedback-sender" id="feedback-sender"><br>
 
-        <div id="close-suggestion">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <label>Comments:</label><br>
+                <textarea cols="45" rows="10" name="comments" id="comments"></textarea>
+
+                <div class="g-recaptcha" data-sitekey="6LeOIgsTAAAAAH96eYU8NB6FP3FWz9JhlsHMZbyP"></div>
+                <br /> 	<br />
+                <input type="hidden" value="send-feedback" name="target">
+                <input type="submit" id="send" value="Send">
+            </form>
         </div>
     </div>
 
@@ -73,31 +77,37 @@
                     $("#suggestion-form").show();
                     $("#alert-message").remove();
                     $("#greetings").remove();
+                    grecaptcha.reset();
                 });
             });
-            $("#send").click(function(){
+            $("#suggestion-formId").submit(function() {
                 $("#alert-message").remove();
                 var comments = $.trim($("#comments").val());
                 var feedbackSender = $.trim($("#feedback-sender").val());
                 if ('' != comments) {
+                    var url = "/index.php?target=send-feedback";
                     $.ajax({
-                        method: "POST",
-                        url: "/index.php?target=send-feedback",
-                        data: { feedbackSender: feedbackSender, comments: comments }
+                        type: "POST",
+                        url: url,
+                        data: {'postData': $("#suggestion-formId").serialize()}
                     }).done(function( msg ) {
                         if ('success' == msg) {
                             $("#suggestion-form").hide();
                             $("#suggestion-wrapper").prepend('<p id="greetings">Thank you&nbsp'+feedbackSender+'</p>');
                             $("#close-suggestion").css('top', '-25px');
                             window.setTimeout(function(){$("#close-suggestion").trigger('click')}, 1600);
+                        } else if ('no-captcha' == msg) {
+                            $('<span id="alert-message">Please, verify you are a human.</span>').insertAfter($("#suggestion-form"));
                         } else {
                             $('<span id="alert-message">Something went wrong.</span>').insertAfter($("#suggestion-form"));
                         }
-                    });
+                        grecaptcha.reset();
+                    })
                 } else {
                     $('<span id="alert-message">Please, write something.</span>').insertAfter($("#suggestion-form"));
                     window.setTimeout(function(){$("#alert-message").remove()}, 3600);
                 }
+                return false;
 
 
             });
