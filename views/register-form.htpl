@@ -38,6 +38,7 @@
 
                     <input name="target" type="hidden" value="register-handler" />
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Register Me</button>
+                    <a href="/index.php?target=home" style="float:right; margin: 10px 12px 0 0">Cancel</a>
                     <hr />
                     Already Registered ?  <a id="login" href="/?target=login" >Login here</a>
                 </form>

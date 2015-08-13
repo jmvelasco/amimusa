@@ -1,5 +1,5 @@
 <div class="row text-center pad-top">
-	<div class="col-md-12">
+    <div class="col-md-12">
         <h3 class="form-signin-heading">Amimusa's World Door</h3>
     </div>
 </div>
@@ -12,8 +12,8 @@
             </div>
             <div class="panel-body">
                 <form role="form" action="/index.php" method="post">
-				<br/>
-	                <div class="form-group input-group">
+                <br/>
+                    <div class="form-group input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
                         <input name="username" type="text" class="form-control" placeholder="Username" required autofocus />
                     </div>
@@ -21,8 +21,10 @@
                         <span class="input-group-addon"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></span>
                         <input name="password" type="password" class="form-control" placeholder="Password" required />
                     </div>
+
                     <input name="target" type="hidden" value="login-handler" />
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Enter</button>
+                    <a href="/index.php?target=home" style="float:right; margin: 10px 12px 0 0">Cancel</a>
                     <hr />
                     Not Registered ?  <a id="register" href="/?target=register" >Register here</a>
                 </form>

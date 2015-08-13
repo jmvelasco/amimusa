@@ -403,7 +403,7 @@ switch ($target) {
                 $errorMessage = "The user doesn't exist or the password is not correct.<br> <a href='/index.php?target=remember-password'>Remember Password</a>.";
                 break;
             case 23420:
-                $errorMessage = "The user is not logged in.<br> <a href='/index.php?target=login'>Enter</a>&nbsp;or&nbsp;<a href='/index.php?target=home'>Go home</a>.";
+                $errorMessage = "The user is not logged in.<br> <a href='/index.php?target=login'>Enter</a>&nbsp;or&nbsp;<a href='/index.php?target=register'>Register</a>.";
                 break;
             case 23430:
                 $errorMessage = "The e-mail doesn't much with the one the user was registered.";
