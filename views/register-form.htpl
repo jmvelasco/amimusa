@@ -1,5 +1,5 @@
 <div class="row text-center pad-top">
-	<div class="col-md-12">
+    <div class="col-md-12">
         <h3 class="form-signin-heading">Registration to Amimusa's World</h3>
     </div>
 </div>
@@ -10,29 +10,32 @@
                 <strong>Introduce your information</strong>  
             </div>
             <div class="panel-body">
-                <form role="form" action="/index.php" method="post">
-				<br/>
+                <form role="form" action="/index.php" method="post" data-toggle="validator">
+                <br/>
                     <div class="form-group input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></span>
-	                    <input name="name" type="text" class="form-control" placeholder="Your Name" autofocus/>
+                        <input name="register-name" type="text" class="form-control" placeholder="Your Name" autofocus required />
                     </div>
-	                <div class="form-group input-group">
+                    <div class="form-group input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-                        <input name="username" type="text" class="form-control" placeholder="Desired Username" required />
+                        <input name="register-username" type="text" class="form-control" placeholder="Desired Username" required />
                     </div>
                     <div class="form-group input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
-                        <input name="email" type="text" class="form-control" placeholder="Your Email" required />
+                        <input name="register-email" type="email" class="form-control" placeholder="Your Email" required />
                     </div>
                     <div class="form-group input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></span>
-                        <input name="password" type="password" class="form-control" placeholder="Enter Password" required />
+                        <input name="register-password" type="password" class="form-control" placeholder="Enter Password" required />
                     </div>
                     <div class="form-group input-group">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></span>
-                        <input name="password-match" type="password" class="form-control" placeholder="Retype Password" required />
+                        <input name="register-password-match" type="password" class="form-control" placeholder="Retype Password" required />
                     </div>
-                                     
+                    <div class="form-group input-group">
+                        <div class="g-recaptcha" data-sitekey="6LfoQQsTAAAAAKABwGMenlCI4Kltr7Pu7PuNGDji"></div>
+                    </div>
+
                     <input name="target" type="hidden" value="register-handler" />
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Register Me</button>
                     <hr />

@@ -1,4 +1,4 @@
-<div class="jumbotron">
+<div class="jumbotron" style="margin-top: 50px;">
   <img src="/images/crash-img.png" alt="error" class="pull-right">
   <h1>We have a problem</h1>
   <div style="background: url('/images/error-img.png') no-repeat;width:500px;height:327px;margin-bottom: 20px;">

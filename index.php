@@ -32,20 +32,8 @@ switch ($target) {
         if (empty($captcha)) {
             die('no-captcha');
         } else {
-            $google_url = "https://www.google.com/recaptcha/api/siteverify";
             $secret = '6LeOIgsTAAAAANUz7PHsA9A3aMw1It8ifmpUT_sp';
-            $ip = $_SERVER['REMOTE_ADDR'];
-            $captchaurl = $google_url."?secret=".$secret."&response=".$captcha."&remoteip=".$ip;
-
-            $curl_init = curl_init();
-            curl_setopt($curl_init, CURLOPT_URL, $captchaurl);
-            curl_setopt($curl_init, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl_init, CURLOPT_TIMEOUT, 10);
-            $results = curl_exec($curl_init);
-            curl_close($curl_init);
-
-            $results= json_decode($results, true);
-            if ($results['success']) {
+            if ($service->checkCaptcha($captcha, $secret)) {
                 if ($service->sendFeedback($senderName, $comments)) {
                     die('success');
                 } else {
@@ -55,7 +43,6 @@ switch ($target) {
             } else {
                 die('error');
             }
-
         }
         die('error');
 
@@ -68,7 +55,7 @@ switch ($target) {
         // Set the title for the page
         $vars['title'] = 'Amimusa Welcome Page';
         if (isset($_GET['status']) && (1 == $_GET['status'])) {
-            $message = '<div class="alert alert-success">Password updated successfully.<br /><small>Please, check your email to confirm the operation.</small></div>';
+            $message = '<div class="alert alert-success">Please, check your email to active your account.</div>';
         } else {
             $message = '';
         }
@@ -374,12 +361,18 @@ switch ($target) {
         break;
 
     case 'register-handler':
-        $returnCode = $service->register($_POST);
-        if (23000 == $returnCode) {
-            header('Location: /?target=error-handler&error-code='.$returnCode);
+        $secret = '6LfoQQsTAAAAAKHyqpJ3-5HYLj56_TU1khY8vl9t';
+        if ($service->checkCaptcha($_POST['g-recaptcha-response'], $secret)) {
+            $returnCode = $service->register($_POST);
+            if (23000 == $returnCode) {
+                header('Location: /?target=error-handler&error-code='.$returnCode);
+            } else {
+                //$returnCode = 1;
+                header('Location: /?target=login&status='.$returnCode);
+            }
         } else {
-            $_SESSION['user'] = array('id' => $returnCode, 'name' => $_POST['username']);
-            header('Location: /?target=home');
+            $returnCode = 23460;
+            header('Location: /?target=error-handler&error-code='.$returnCode);
         }
 
         break;
@@ -407,16 +400,19 @@ switch ($target) {
                 $errorMessage = "The password doesn't match.";
                 break;
             case 23410:
-                $errorMessage = "The user doesn't exist or the password is not correct.<br> <a href='/index.php?target=remember-password'>Remember Password</a>";
+                $errorMessage = "The user doesn't exist or the password is not correct.<br> <a href='/index.php?target=remember-password'>Remember Password</a>.";
                 break;
             case 23420:
-                $errorMessage = "The user is not logged in.";
+                $errorMessage = "The user is not logged in.<br> <a href='/index.php?target=login'>Enter</a>&nbsp;or&nbsp;<a href='/index.php?target=home'>Go home</a>.";
                 break;
             case 23430:
                 $errorMessage = "The e-mail doesn't much with the one the user was registered.";
                 break;
-            case '23440':
-                $errorMessage = "The link is not associated with an activation token.<br> <a href='/index.php?target=remember-password'>Remember Password</a>";
+            case 23440:
+                $errorMessage = "The link is not associated with an activation token.<br> <a href='/index.php?target=remember-password'>Remember Password</a>.";
+                break;
+            case 23460:
+                $errorMessage = "You have to validate that you are a human.";
                 break;
             case 23000:
                 $errorMessage = "There is another user with this username or email. Please choose another one to proceed.";

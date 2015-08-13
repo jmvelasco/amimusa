@@ -49,23 +49,23 @@ class Service
             return $this->mdb;
         }
 
-
-
     }
 
     public function register($data)
     {
-        if ($data['password'] === $data['password-match']) {
-            $sentencia = $this->getConnection()->prepare("INSERT INTO `contributors` (`name`, `username`, `email`, `password`) VALUES (:name, :username, :email, :password)");
+        if ($data['register-password'] === $data['register-password-match']) {
+            $sentencia = $this->getConnection()->prepare("INSERT INTO `contributors` (`name`, `username`, `email`, `password`, `security_token`, `active`) VALUES (:name, :username, :email, :password, :token, 0)");
             $sentencia->bindParam(':name', $name);
             $sentencia->bindParam(':username', $username);
             $sentencia->bindParam(':email', $email);
             $sentencia->bindParam(':password', $password);
+            $sentencia->bindParam(':token', $token);
 
-            $name       = isset($data['name'])?trim($data['name']):'';
-            $username   = trim($data['username']);
-            $email      = $data['email'];
-            $password   = md5($data['password']);
+            $name       = isset($data['register-name'])?trim($data['register-name']):'';
+            $username   = trim($data['register-username']);
+            $email      = $data['register-email'];
+            $password   = md5($data['register-password']);
+            $token = md5(uniqid($username, true));
 
             try {
                 $sentencia->execute();
@@ -76,15 +76,24 @@ class Service
                 $errorCode = (int)$e->getCode();
                 $error[$errorCode] = $e->getMessage();
                 $this->getConnection()->rollBack();
-                //throw new \PDOException($e);
+                throw new \PDOException($e);
             }
+
+            $para      = $email;
+            $titulo    = 'Active account';
+            $activationLink = 'http://' . $_SERVER['SERVER_NAME'] . '/?target=active-account&token=' . $token;
+            $mensaje   = 'Click on the following link to active your account:' . "\n" . $activationLink;
+            $cabeceras = 'From: no-reply@amimusa.net' . "\r\n" .
+                'Reply-To: no-reply@amimusa.net' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+
+            return (int) mail($para, $titulo, $mensaje, $cabeceras);
 
 
         } else {
             $errorCode = 23400;
         }
 
-        return $errorCode;
     }
 
     public function updatePassword($data)
@@ -185,7 +194,6 @@ class Service
         } else {
             return false;
         }
-
     }
 
     public function sendFeedback($senderName, $comments)
@@ -193,7 +201,7 @@ class Service
         $para      = 'amimusamanou@gmail.com';
         $titulo    = 'Feedback received';
 
-        $mensaje   = $comments . "\n" . $senderName;
+        $mensaje   = $comments . "\n--\n" . $senderName;
         $cabeceras = 'From: no-reply@amimusa.net' . "\r\n" .
             'Reply-To: no-reply@amimusa.net' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
@@ -201,6 +209,31 @@ class Service
         mail($para, $titulo, $mensaje, $cabeceras);
 
         return true;
+    }
+
+    public function checkCaptcha($captcha = "", $secret = "")
+    {
+        if (empty($captcha) or empty($secret)) {
+            return false;
+        } else {
+            $google_url = "https://www.google.com/recaptcha/api/siteverify";
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $captchaurl = $google_url."?secret=".$secret."&response=".$captcha."&remoteip=".$ip;
+
+            $curl_init = curl_init();
+            curl_setopt($curl_init, CURLOPT_URL, $captchaurl);
+            curl_setopt($curl_init, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl_init, CURLOPT_TIMEOUT, 10);
+            $results = curl_exec($curl_init);
+            curl_close($curl_init);
+
+            $results= json_decode($results, true);
+            if ($results['success']) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     public function registerWritting($data, $idContributor)
