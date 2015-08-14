@@ -97,6 +97,7 @@ body {
     left: -600px;
     color: #0f0f0f;
     border-radius: 5px;
+    z-index: 100;
 }
 
 #close-suggestion {

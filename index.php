@@ -99,11 +99,12 @@ switch ($target) {
                     'username' => $user['name'],
                     'page-title' => $vars['title']
             ));
+
             $content .= $service->render('home');
 
             $musas = $service->getMusas();
             if (!empty($musas)) {
-                $content .= '<div id="musas-wrapper">';
+                $content .= '<div id="musas-wrapper" class="container">';
                 foreach ($musas as $musaId =>$musa) {
                     unset($musa['count']);
                     $musa['id'] = $musaId;
@@ -120,7 +121,7 @@ switch ($target) {
 
             $musas = $service->getMusas();
             if (!empty($musas)) {
-                $content .= '<div id="musas-wrapper">';
+                $content .= '<div id="musas-wrapper" class="container">';
                 foreach ($musas as $musaId =>$musa) {
                     unset($musa['count']);
                     $musa['id'] = $musaId;
@@ -129,6 +130,7 @@ switch ($target) {
                 $content .= '</div>';
             }
         }
+        $content .= $service->render('suggestion-block');
 
         break;
 
@@ -250,7 +252,7 @@ switch ($target) {
     case 'get-publications';
         $vars['title'] = 'Amimusa: <small>' . strtoupper($_GET['name']) . '</small>';
 
-        if ($user = in_array('user', $_SESSION)?$_SESSION['user']:false) {
+        if ($user = key_exists('user', $_SESSION)?$_SESSION['user']:false) {
             $content =  $service->render('header', array(
                     'username' => $user['name'],
                     'page-title' => $vars['title']
