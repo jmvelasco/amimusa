@@ -8,11 +8,11 @@
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         </div>
         <form id="suggestion-formId" method="post">
-            <p>Por favor, mándanos tu impresión sobre este sitio. Estamos en construcción y será muy valorado.</p>
-            <label>Your name:</label><br>
+            <p>Por favor, mándanos tu impresión sobre este sitio.<br>Estamos en construcción y será muy valorado.</p>
+            <label>Tu nombre:</label><br>
             <input type="text" size="20" name="feedback-sender" id="feedback-sender"><br>
 
-            <label>Comments:</label><br>
+            <label>Commentarios:</label><br>
             <textarea cols="45" rows="10" name="comments" id="comments"></textarea>
 
             <div class="g-recaptcha" data-sitekey="6LeOIgsTAAAAAH96eYU8NB6FP3FWz9JhlsHMZbyP"></div>
