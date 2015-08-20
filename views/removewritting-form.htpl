@@ -1,17 +1,17 @@
 <div class="container">
-    <h4>Are you sure to remove this contribution?</h4>
-	<div class="panel panel-default">
-	  <div class="panel-heading">
-	    <h2 class="panel-title">###title###</h2>
-	  </div>
-	  <div class="panel-body">
-	    ###body###
-	  </div>
-	</div>
-	<form id="writting-form" role="form" action="/index.php" method="post">
-	  <input name="target" type="hidden" value="removewritting-handler" />
-	  <input name="id" type="hidden" value="###id###" />
-      <button id="submit-writting" type="submit" class="btn btn-primary" value="update">Yes</button>
-      <a href="/index.php" class="btn btn-danger">Cancel</a>
-	</form>
+    <h4>¿Seguro que quires borrar el escrito?</h4>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2 class="panel-title">###title###</h2>
+      </div>
+      <div class="panel-body">
+        ###body###
+      </div>
+    </div>
+    <form id="writting-form" role="form" action="/index.php" method="post">
+      <input name="target" type="hidden" value="removewritting-handler" />
+      <input name="id" type="hidden" value="###id###" />
+      <button id="submit-writting" type="submit" class="btn btn-primary" value="update">Sí</button>
+      <a href="/index.php" class="btn btn-danger">Cancelar</a>
+    </form>
 </div>

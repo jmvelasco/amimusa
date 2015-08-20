@@ -1,15 +1,15 @@
 <div class="container">
-	###alert-message###
-	<table class="table table-striped">
-		<thead>
-		<tr>
-			<th>Title</th>
-			<th colspan="2" class="text-center">Action</th>
-		</tr>
-		</thead>
-		
-		<tbody>
-		   ###rows###
-	    </tbody>
-	</table>
+    ###alert-message###
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Título</th>
+            <th colspan="2" class="text-center">Operación</th>
+        </tr>
+        </thead>
+
+        <tbody>
+           ###rows###
+        </tbody>
+    </table>
 </div>

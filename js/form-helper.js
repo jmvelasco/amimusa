@@ -2,16 +2,15 @@ audiojs.events.ready(function() {
     var as = audiojs.createAll();
 });
 
+/*
 function loopAudio(obj) {
     var audioPlayer = obj;
     setTimeout(function () {
-// Do Something Here
-// Then recall the parent function to
-// create a recursive loop.
         audioPlayer.play();
         loopAudio(audioPlayer);
     }, 60000);
 }
+*/
 
 $(document).ready(function() {
 
@@ -74,10 +73,10 @@ $(document).ready(function() {
 
     $("#submit-writting").click(function(){
         if ($("#musasIdList").val() == '') {
-            $("#musas-list-err").html('<p class="text-danger">You have to add at least one musa.</p>');
+            $("#musas-list-err").html('<p class="text-danger">Iep, tienes que añadir al menos una musa.</p>');
             return false;
         } else if($("#body").val() == '') {
-            $("#body-err").html('<p class="text-danger">Write something...</p>');
+            $("#body-err").html('<p class="text-danger">Escribe algo...</p>');
             return false;
         }
     });
@@ -143,7 +142,9 @@ $(document).ready(function() {
                         var jsonData = jQuery.parseJSON(result);
                         var potentialMatch = "<ul class='list-group'>";
                         for(var id in jsonData) {
-                            potentialMatch = potentialMatch + "<li class='list-group-item list-group-item-success select-musa' id='"+id+"'>" + jsonData[id] + "<span class='glyphicon glyphicon-ok pull-right'></span></li>";
+                            potentialMatch = potentialMatch + "<li class='list-group-item list-group-item-success select-musa' id='"+id+"'>"
+                                + jsonData[id]
+                                + "<span class='glyphicon glyphicon-ok pull-right'></span></li>";
                         }
                         potentialMatch = potentialMatch + '</ul>';
                         $("#musas-like").html(potentialMatch);

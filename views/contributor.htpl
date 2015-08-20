@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-2 col-sm-2 col-xs-2">
-		<h4 class="text-info">Name:</h4>
+		<h4 class="text-info">Nombre:</h4>
 	</div>
 	<div class="col-md-10 col-sm-10 col-xs-10">
 		<h6>###name###</h6>
@@ -18,7 +18,7 @@
 
 <div class="row">
 	<div class="col-md-2 col-sm-2 col-xs-2">
-		<h4 class="text-info">About me:</h4>
+		<h4 class="text-info">Sobre mí:</h4>
 	</div>
 	<div class="col-md-10 col-sm-10 col-xs-10">
 		<h6>###description###</h6>
@@ -27,7 +27,7 @@
 
 <div class="row">
 	<div class="col-md-2 col-sm-2 col-xs-2">
-		<h4 class="text-info">Link to profile:</h4>
+		<h4 class="text-info">Enlace a perfil social:</h4>
 	</div>
 	<div class="col-md-10 col-sm-10 col-xs-10">
 		<h6><a target="_blank" href="###link_to_profile###">###link_to_profile###</a></h6>
@@ -46,9 +46,9 @@
 
 <hr />
 <ul class="nav nav-pills">
-  <li><a href="/?target=home" >Go Home</a></li>
-  <li><a href="/?target=update-profile" >Edit</a></li>
-  <li><a href="/?target=user-contributions" >My Contributions</a></li>
+  <li><a href="/?target=home" >Ir al espacio de las musas</a></li>
+  <li><a href="/?target=update-profile" >Modificar perfil</a></li>
+  <li><a href="/?target=user-contributions" >Mis escritos</a></li>
 </ul>
 
 
