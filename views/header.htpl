@@ -10,13 +10,13 @@
 			</div>
 			
 			<div class="col-xs-2 col-sm-2 col-md-2">
-			  <a href="/index.php?target=writting" class="btn btn-success navbar-btn pull-left">¡Me siento inspirado!</a>
+			  <a href="/index.php?target=writting" class="btn btn-success navbar-btn pull-left inspired">¡Me siento inspirado!</a>
 			</div>
 			 
 			<div class="col-xs-2 col-sm-2 col-md-2">
 			  <h4 class="navbar-text">
 			      <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-			  <a id="logout" href="/?target=logout" class="navbar-link"><span style="margin-left:4px;"><span class="glyphicon glyphicon-off" aria-hidden="true"></span>Cerrar</span></a>
+			  <a id="logout" href="/?target=logout" class="navbar-link"><span style="margin-left:4px;">Cerrar</span></a>
 			  </h4>
 			</div>
 		</div>

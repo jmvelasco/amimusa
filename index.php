@@ -114,7 +114,6 @@ switch ($target) {
             }
         } else {
             $content =  $service->render('publicheader', array(
-                    'username' => $user['name'],
                     'page-title' => $vars['title']
             ));
             $content .= $service->render('home');
@@ -139,7 +138,7 @@ switch ($target) {
         $vars['title'] = 'Tu perfil';
 
         if ($user = $_SESSION['user']) {
-            if (isset($_GET['userid'])) {
+            if (isset($_GET['userid']) && ($_GET['userid'] != $user['id'])) {
                 $userId = $_GET['userid'];
             } else {
                 $userId = $user['id'];

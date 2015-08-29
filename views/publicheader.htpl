@@ -1,4 +1,5 @@
 <div class="container">
+    <!--
     <div id="header-nav">
         <div class="row">
             <div class="col-xs-10 col-sm-10 col-md-10">
@@ -8,16 +9,18 @@
                 </h4>
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2">
-              <a href="/index.php?target=writting" class="btn btn-success navbar-btn pull-left">¡Me siento inspirado!</a>
+              <a href="/index.php?target=writting" class="btn btn-success navbar-btn pull-left inspired">¡Me siento inspirado!</a>
             </div>
         </div>
     </div>
+    -->
     <div class="page-header">
-        <h1>###page-title###</h1>
+        <h1>###page-title###<a href="/index.php?target=writting" class="btn btn-success navbar-btn pull-right inspired">¡Me siento inspirado!</a></h1>
+
     </div>
 </div>
 
 <div id="audiojs" style="display:none;">
-    <audio src="audio_files/water.mp3" autoplay="autoplay" onloadeddata="loopAudio(this)" /></audio>
+    <audio src="audio_files/water.mp3" autoplay="autoplay" /></audio>
 </div>
 

@@ -57,7 +57,18 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/css/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
+        function loopInspired(obj) {
+            setTimeout(function () {
+                if ('¡Me siento inspirado!' == obj.text()) {
+                    obj.text('¡Me siento inspirada!');
+                } else {
+                    obj.text('¡Me siento inspirado!');
+                }
+                loopInspired(obj);
+            }, 1200);
+        }
         $(document).ready(function(){
+            loopInspired($(".inspired"));
             $("#suggestion").click(function(){
                 $(this).hide();
                 $("#close-suggestion").css('top', '-166px');
