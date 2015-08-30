@@ -1,32 +1,32 @@
 <div class="container">
-	<form id="writting-form" role="form" action="/index.php" method="post">
-	  <div class="form-group">
-	    <label for="name">Title</label>
-	    <input name="title" type="text" class="form-control" id="title" required>
-	  </div>
-	  <div class="form-group">
-	    <label for="body">Your inspiration...</label><span id="body-err"></span>
-	    <textarea name="body" class="form-control" rows="3" id="body"></textarea>
-	  </div>
-	  <div class="form-group" id="selectmusas-wrapper">
-	     <div class="row">
-		    <div class="col-xs-4">
-	            <label for="link-to-profile">Inspiration Sighs</label>&nbsp;<small>(press "enter" to add it)</small>
-	            <textarea name="musa" class="form-control" rows="1" id="musa"></textarea>
+    <form id="writting-form" role="form" action="/index.php" method="post">
+      <div class="form-group">
+        <label for="name">Título</label>
+        <input name="title" type="text" class="form-control" id="title" required>
+      </div>
+      <div class="form-group">
+        <label for="body">Tu inspiración...</label><span id="body-err"></span>
+        <textarea name="body" class="form-control" rows="3" id="body"></textarea>
+      </div>
+      <div class="form-group" id="selectmusas-wrapper">
+         <div class="row">
+            <div class="col-xs-4">
+                <label for="link-to-profile">¿quién es tu musa?</label>&nbsp;<small>(pulsa "enter" para añadirla)</small>
+                <textarea name="musa" class="form-control" rows="1" id="musa"></textarea>
                 <input name="musasIdList" type="hidden" class="form-control" id="musasIdList">
-	            <br />
-                <button id="submit-writting" type="submit" class="btn btn-primary" value="update">Share</button>
-                <a href="/index.php" class="btn btn-danger">Cancel</a>
+                <br />
+                <button id="submit-writting" type="submit" class="btn btn-primary" value="update">Compartir</button>
+                <a href="/index.php" class="btn btn-danger">Cancelar</a>
                 
-		    </div>
-		    <div class="col-xs-2">
-	            <div id="musas-like"></div>
-		    </div>
-		    <div class="col-xs-6">
-		       <div id="musas-list"><span id="musas-list-err"></span></div>
-		    </div>
-		  </div>
-	  </div>
-	  <input name="target" type="hidden" value="writting-handler" />
-	</form>
+            </div>
+            <div class="col-xs-2">
+                <div id="musas-like"></div>
+            </div>
+            <div class="col-xs-6">
+               <div id="musas-list"><span id="musas-list-err"></span></div>
+            </div>
+          </div>
+      </div>
+      <input name="target" type="hidden" value="writting-handler" />
+    </form>
 </div>
