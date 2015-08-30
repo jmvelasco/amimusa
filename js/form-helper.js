@@ -48,6 +48,19 @@ $(document).ready(function() {
         loop($(this).parent().parent());
     });
 
+    $(".like").click(function(){
+        var publicationId = $(this).data('publicationid');
+        $.ajax({
+            method: "POST",
+            url: "index.php?target=like-writting",
+            data: { publicationId:  publicationId}
+        }).done(function(result) {
+            if (0 == result) {
+                alert("Gracias por participar.");
+            }
+        });
+    });
+
     (function ( $ ) {
         $.fn.addMusa = function( params ) {
             var musa = $.extend({

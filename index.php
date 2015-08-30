@@ -276,6 +276,15 @@ switch ($target) {
 
         break;
 
+    case 'like-writting':
+        $referer = $_SERVER['REMOTE_ADDR'];
+        $publicationId = $_POST['publicationId'];
+        $return = $service->registerLike($publicationId, $referer);
+        echo $return;
+
+        exit();
+        break;
+
     case 'writting':
         // Set the title for the page
         $vars['title'] = 'Comparte tu inspiración';

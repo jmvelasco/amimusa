@@ -1,26 +1,46 @@
 body {
-	background-color: #222;
-	color: #aaa;
+    background-color: #222;
+    color: #aaa;
 }
 
 .panel-body {
-	background-image: url('/images/background-writting.jpg');
-	font-family: 'Special Elite', cursive;
-	color: #222;
+    background-image: url('/images/background-writting.jpg');
+    font-family: 'Special Elite', cursive;
+    color: #222;
 }
 
 .panel-title {
-	font-family: 'Permanent Marker', cursive;
-	font-size: 22px;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 22px;
 }
 
+.like {
+    /*background-color: #86008F;*/
+    /*color: #d5d5d5 !important;*/
+    /*border-radius: 10px;*/
+
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    /*margin-top: -3px;*/
+    /*padding: 5px;*/
+    /*cursor: pointer;*/
+    /*border: 1px solid #2d2d2d;*/
+}
+/*
+.like:hover {
+    color: #d2d2d2;
+    background-color: #2d2d2d;
+    text-decoration: none;
+}*/
+
+
 .table {
-	background-color: #eee;
-	color: #000;
+    background-color: #eee;
+    color: #000;
 }
 
 .remove-musa {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .select-musa {
@@ -28,51 +48,51 @@ body {
 }
 
 #musas-like {
-	max-height: 143px;
-	overflow: auto;
+    max-height: 143px;
+    overflow: auto;
 }
 
 #header-nav {
-	background-color: #CCC;
-	border-bottom: 1px solid #666;
-	border-left: 1px solid #666;
-	border-right: 1px solid #666;
-	margin: 0 0 12px 0;
-	
+    background-color: #CCC;
+    border-bottom: 1px solid #666;
+    border-left: 1px solid #666;
+    border-right: 1px solid #666;
+    margin: 0 0 12px 0;
+
     border-bottom-right-radius: 30px;
     border-bottom-left-radius: 30px;
     color: #222;
 }
 
 .musa-name {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .musas-profile-list {
-	margin-right: 2px;
-	cursor: pointer;
+    margin-right: 2px;
+    cursor: pointer;
 }
 
 .writting {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 #usercontributions-wrapper {
-	max-height: 560px;
-	max-width: 230px;
-	overflow: auto;
+    max-height: 560px;
+    max-width: 230px;
+    overflow: auto;
 }
 
 #musas-wrapper {
-	width: 1170px;
-	height: 530px;
-	overflow: hidden;
-	background-image: url('/images/background.jpg');
-	border: 1px solid #eee;
-	
+    width: 1170px;
+    height: 530px;
+    overflow: hidden;
+    background-image: url('/images/background.jpg');
+    border: 1px solid #eee;
+
 }
 .musas-home {
-	position: relative;
+    position: relative;
 }
 
 #suggestion {

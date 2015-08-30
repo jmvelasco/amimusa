@@ -574,7 +574,8 @@ class Service
     public function getMusaPublications($idMusa)
     {
         $sentencia = $this->getConnection()->prepare("
-                SELECT c.`name` as contributor,
+                SELECT p.`id` as publicationid,
+                       c.`name` as contributor,
                        c.id as userid,
                        w.`title` as title,
                        w.`body` as body
@@ -601,16 +602,32 @@ class Service
                     if (!is_numeric($column)) {
                         $publications[$k][$column] = $value;
                     }
-
                 }
-
             }
         } else {
             $publications = null;
-
         }
 
         return $publications;
+    }
+
+    public function registerLike($publicationId, $referer)
+    {
+        $sentencia = $this->getConnection()->prepare("INSERT INTO `likes` (`id_publication`, `referer`) VALUES (?, ?)");
+        $mapping = array($publicationId, $referer);
+        try {
+            $sentencia->execute($mapping);
+            $lastId = $this->getConnection()->lastInsertId();
+            $this->getConnection()->commit();
+        } catch(\PDOException  $e) {
+            $errorCode = (int)$e->getCode();
+            $error[$errorCode] = $e->getMessage();
+            $this->getConnection()->rollBack();
+            throw new \PDOException($e);
+        }
+
+        return $lastId;
+
     }
 
     public function getMusas()
