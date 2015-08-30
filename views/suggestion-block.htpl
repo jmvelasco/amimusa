@@ -1,5 +1,5 @@
 
-<div id="suggestion">
+<div id="suggestion" style="background-color: #ffff01; border-top-right-radius: 15px; border-bottom-right-radius: 15px;color:#000;">
     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 </div>
 <div id="suggestion-wrapper">
