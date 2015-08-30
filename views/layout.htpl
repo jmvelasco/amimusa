@@ -49,7 +49,7 @@
     </div> <!-- /container -->
 
     <div id="beta">
-        <img width="140px" src="../images/beta.gif" alt="beat">
+        <img width="140px" src="../images/beta.png" alt="beat">
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -57,7 +57,18 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/css/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
+        function loopInspired(obj) {
+            setTimeout(function () {
+                if ('¡Me siento inspirado!' == obj.text()) {
+                    obj.text('¡Me siento inspirada!');
+                } else {
+                    obj.text('¡Me siento inspirado!');
+                }
+                loopInspired(obj);
+            }, 1200);
+        }
         $(document).ready(function(){
+            loopInspired($(".inspired"));
             $("#suggestion").click(function(){
                 $(this).hide();
                 $("#close-suggestion").css('top', '-166px');
@@ -87,18 +98,18 @@
                     }).done(function( msg ) {
                         if ('success' == msg) {
                             $("#suggestion-form").hide();
-                            $("#suggestion-wrapper").prepend('<p id="greetings">Thank you&nbsp'+feedbackSender+'</p>');
+                            $("#suggestion-wrapper").prepend('<p id="greetings">Gracias&nbsp'+feedbackSender+'</p>');
                             $("#close-suggestion").css('top', '-25px');
                             window.setTimeout(function(){$("#close-suggestion").trigger('click')}, 1600);
                         } else if ('no-captcha' == msg) {
-                            $('<span id="alert-message">Please, verify you are a human.</span>').insertAfter($("#suggestion-form"));
+                            $('<span id="alert-message">Por favor, comprueba que eres una persona.</span>').insertAfter($("#suggestion-form"));
                         } else {
-                            $('<span id="alert-message">Something went wrong.</span>').insertAfter($("#suggestion-form"));
+                            $('<span id="alert-message">Oops, algo ha ido mal!.</span>').insertAfter($("#suggestion-form"));
                         }
                         grecaptcha.reset();
                     })
                 } else {
-                    $('<span id="alert-message">Please, write something.</span>').insertAfter($("#suggestion-form"));
+                    $('<span id="alert-message">Por favor, escribe algo.</span>').insertAfter($("#suggestion-form"));
                     window.setTimeout(function(){$("#alert-message").remove()}, 3600);
                 }
                 return false;

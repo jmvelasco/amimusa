@@ -53,9 +53,9 @@ switch ($target) {
             header('Location: /?target=home');
         }
         // Set the title for the page
-        $vars['title'] = 'Amimusa Welcome Page';
+        $vars['title'] = 'Amimusa: El espacio para compartir tu musa';
         if (isset($_GET['status']) && (1 == $_GET['status'])) {
-            $message = '<div class="alert alert-success">Please, check your email to active your account.</div>';
+            $message = '<div class="alert alert-success">Por favor, comprueba tu correo para activar tu cuenta.</div>';
         } else {
             $message = '';
         }
@@ -66,7 +66,7 @@ switch ($target) {
 
     case 'register':
         // Set the title for the page
-        $vars['title'] = 'Amimusa Regisration Page';
+        $vars['title'] = 'Unete a Amimusa';
 
         $content = $service->render('register-form');
 
@@ -74,7 +74,7 @@ switch ($target) {
 
     case 'remember-password':
         // Set the title for the page
-        $vars['title'] = 'Remember your password';
+        $vars['title'] = 'Recuerda tu contraseña';
         $content = $service->render('rememberpassword-form');
 
         break;
@@ -91,7 +91,7 @@ switch ($target) {
 
     case 'home':
         // Set the title for the page
-        $vars['title'] = 'Amimusa\'s Home';
+        $vars['title'] = 'Amimusa: El espacio para compartir tu musa';
 
         if ($user = key_exists('user', $_SESSION)?$_SESSION['user']:false) {
             $profileData = $service->getContributorProfile($user['name']);
@@ -114,7 +114,6 @@ switch ($target) {
             }
         } else {
             $content =  $service->render('publicheader', array(
-                    'username' => $user['name'],
                     'page-title' => $vars['title']
             ));
             $content .= $service->render('home');
@@ -136,10 +135,10 @@ switch ($target) {
 
     case 'profile':
         // Set the title for the page
-        $vars['title'] = 'Amimusa\'s Contributor Profile';
+        $vars['title'] = 'Tu perfil';
 
         if ($user = $_SESSION['user']) {
-            if (isset($_GET['userid'])) {
+            if (isset($_GET['userid']) && ($_GET['userid'] != $user['id'])) {
                 $userId = $_GET['userid'];
             } else {
                 $userId = $user['id'];
@@ -166,7 +165,7 @@ switch ($target) {
 
     case 'update-profile':
         // Set the title for the page
-        $vars['title'] = 'Update Amimusa\'s Contributor Profile';
+        $vars['title'] = 'Modifica tu perfil';
 
         if ($user = $_SESSION['user']) {
             $profileData = $service->getContributorProfile($user['id']);
@@ -183,7 +182,7 @@ switch ($target) {
         break;
 
     case 'user-contributions':
-        $vars['title'] = 'My Contributions';
+        $vars['title'] = 'Mis escritos';
 
         if ($user = $_SESSION['user']) {
             if (isset($_GET['userid'])) {
@@ -200,7 +199,7 @@ switch ($target) {
             $userContributions = $service->getUserContributions($userId);
             $data['rows'] = $service->renderContributionsRows($userContributions);
             if (isset($_GET['status']) && (1 == $_GET['status'])) {
-                $message = '<div class="alert alert-success">Action performed successfully</div>';
+                $message = '<div class="alert alert-success">Todo correcto!</div>';
             } else {
                 $message = '';
             }
@@ -215,7 +214,7 @@ switch ($target) {
 
     case 'edit-contribution':
         // Set the title for the page
-        $vars['title'] = 'Edit your contribution';
+        $vars['title'] = 'Modifica tu escrito';
 
         if ($user = $_SESSION['user']) {
             $content =  $service->render('header', array(
@@ -233,7 +232,7 @@ switch ($target) {
 
     case 'remove-contribution':
         // Set the title for the page
-        $vars['title'] = 'Remove your contribution';
+        $vars['title'] = 'Elimina tu escrito';
 
         if ($user = $_SESSION['user']) {
             $content =  $service->render('header', array(
@@ -279,7 +278,7 @@ switch ($target) {
 
     case 'writting':
         // Set the title for the page
-        $vars['title'] = 'Share your inspiration';
+        $vars['title'] = 'Comparte tu inspiración';
 
         if ($user = $_SESSION['user']) {
             $content =  $service->render('header', array(
@@ -392,35 +391,35 @@ switch ($target) {
 
     case 'error-handler':
         // Set the title for the page
-        $vars['title'] = 'Amimusa Regisration Page';
+        $vars['title'] = 'Gestión de errores';
 
         $page = file_get_contents('views/error.htpl');
         $errorMessage = $_GET['error-code'];
 
         switch ($_GET['error-code']) {
             case 23400:
-                $errorMessage = "The password doesn't match.";
+                $errorMessage = "Las contraseñas no coinciden.";
                 break;
             case 23410:
-                $errorMessage = "The user doesn't exist or the password is not correct.<br> <a href='/index.php?target=remember-password'>Remember Password</a>.";
+                $errorMessage = "No existe el usuario o la contraseña es incorrecta.<br> <a href='/index.php?target=remember-password'>Recordar contraseña</a>.";
                 break;
             case 23420:
-                $errorMessage = "The user is not logged in.<br> <a href='/index.php?target=login'>Enter</a>&nbsp;or&nbsp;<a href='/index.php?target=register'>Register</a>.";
+                $errorMessage = "No estás dentro.<br> <a href='/index.php?target=login'>Entrar</a>&nbsp;or&nbsp;<a href='/index.php?target=register'>Registrarte</a>.";
                 break;
             case 23430:
-                $errorMessage = "The e-mail doesn't much with the one the user was registered.";
+                $errorMessage = "La dirección de correo no coincide con el usuario.";
                 break;
             case 23440:
-                $errorMessage = "The link is not associated with an activation token.<br> <a href='/index.php?target=remember-password'>Remember Password</a>.";
+                $errorMessage = "El enlace no se corresponde con ningún token.<br> <a href='/index.php?target=remember-password'>Recordar Contraseña</a>.";
                 break;
             case 23460:
-                $errorMessage = "You have to validate that you are a human.";
+                $errorMessage = "Tienes que verificar que eres una persona.";
                 break;
             case 23000:
-                $errorMessage = "There is another user with this username or email. Please choose another one to proceed.";
+                $errorMessage = "Ya existe un usuario con este nombre o dirección de correo. Deberías escoger otro.";
                 break;
             default:
-                $errorMessage = "Something is wrong: " . $_GET['error-code'];
+                $errorMessage = "Oops, algo va mal!: " . $_GET['error-code'];
         }
         $content = str_replace('###error-message###', $errorMessage, $page);
 
