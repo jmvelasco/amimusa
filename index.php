@@ -1,12 +1,12 @@
 <?php
 require_once('bootstrap.php');
 
-use \Models\Service;
+//use \Models\Service;
 $service = new \Models\Service();
 
 // Default JS Scripts to include
 $js[] = '/js/jquery-1.11.3.js';
-$js[] = '/js/audiojs/audio.min.js';
+//$js[] = '/js/audiojs/audio.min.js';
 $js[] = '/js/form-helper.js';
 
 /**
@@ -20,7 +20,7 @@ if (isset($_GET['target'])) {
         $target = $_POST['target'];
     }
 }
-
+$content = '';
 switch ($target) {
     case 'send-feedback';
         $postData = array();
