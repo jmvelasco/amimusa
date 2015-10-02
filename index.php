@@ -118,16 +118,16 @@ switch ($target) {
             ));
             $content .= $service->render('home');
 
+            $content .= '<div id="musas-wrapper" class="container">';
             $musas = $service->getMusas();
             if (!empty($musas)) {
-                $content .= '<div id="musas-wrapper" class="container">';
                 foreach ($musas as $musaId =>$musa) {
                     unset($musa['count']);
                     $musa['id'] = $musaId;
                     $content .= $service->render('musa-block', $musa);
                 }
-                $content .= '</div>';
             }
+            $content .= '</div>';
         }
         $content .= $service->render('suggestion-block');
 
