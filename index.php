@@ -93,7 +93,7 @@ switch ($target) {
         // Set the title for the page
         $vars['title'] = 'Amimusa: El espacio para compartir tu musa';
 
-        if ($user = key_exists('user', $_SESSION)?$_SESSION['user']:false) {
+        if ($user = array_key_exists('user', $_SESSION)?$_SESSION['user']:false) {
             $profileData = $service->getContributorProfile($user['name']);
             $content =  $service->render('header', array(
                     'username' => $user['name'],
@@ -206,8 +206,7 @@ switch ($target) {
             $data['alert-message'] = $message;
             $content .= $service->render('usercontributions-table', $data);
         }  else {
-            $errorCode = 23420;
-            header('Location: /?target=error-handler&error-code='.$errorCode);
+            header('Location: /?target=home');
         }
 
         break;
@@ -251,7 +250,7 @@ switch ($target) {
     case 'get-publications';
         $vars['title'] = 'Amimusa: <small>' . strtoupper($_GET['name']) . '</small>';
 
-        if ($user = key_exists('user', $_SESSION)?$_SESSION['user']:false) {
+        if ($user = array_key_exists('user', $_SESSION)?$_SESSION['user']:false) {
             $content =  $service->render('header', array(
                     'username' => $user['name'],
                     'page-title' => $vars['title']
@@ -289,15 +288,23 @@ switch ($target) {
         // Set the title for the page
         $vars['title'] = 'Comparte tu inspiración';
 
-        if ($user = $_SESSION['user']) {
+        //if ($user = $_SESSION['user']) {
+        if ($user = array_key_exists('user', $_SESSION)?$_SESSION['user']:false) {
             $content =  $service->render('header', array(
                     'username' => $user['name'],
                     'page-title' => $vars['title']
             ));
             $content .= $service->render('writting-form');
         } else {
+            /*
             $errorCode = 23420;
             header('Location: /?target=error-handler&error-code='.$errorCode);
+            */
+            $content =  $service->render('publicheader', array(
+                'username' => 'anonymous',
+                'page-title' => $vars['title']
+            ));
+            $content .= $service->render('writting-form');
         }
 
         break;
@@ -305,16 +312,21 @@ switch ($target) {
     case 'writting-handler':
         $musasIdList = isset($_POST['musasIdList']) ? trim($_POST['musasIdList']) : '';
         $body = isset($_POST['body']) ? trim($_POST['body']) : '';
+        $secret = '6LdqKRATAAAAANR2DnvSAGTtM-367Wz4YbAXF5SI';
         if (empty($musasIdList) ||empty($body)) {
             $errorCode = 23500;
             header('Location: /?target=error-handler&error-code='.$errorCode);
         } else {
-            $errorCode = $service->registerWritting($_POST, $_SESSION['user']['id']);
-            if (23000 == $errorCode) {
-                header('Location: /?target=error-handler&error-code='.$errorCode);
-            } else {
-                header('Location: /?target=user-contributions&status=1');
+            if ($userId = array_key_exists('user', $_SESSION)?$_SESSION['user']['id']:0);
+            if ($service->checkCaptcha($_POST['g-recaptcha-response'], $secret)) {
+                $errorCode = $service->registerWritting($_POST, $userId);
+                if (23000 == $errorCode) {
+                    header('Location: /?target=error-handler&error-code='.$errorCode);
+                } else {
+                    header('Location: /?target=user-contributions&status=1');
+                }
             }
+
 
         }
 
