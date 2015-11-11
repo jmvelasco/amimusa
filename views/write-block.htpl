@@ -1,6 +1,14 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h2 class="panel-title">###title###</h2>
+        <h2 class="panel-title">
+            ###title###
+            <!--
+            <span data-publicationid="###publicationid###" class="pull-right like"><span style="margin-right: 2px;" class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>Me gusta</span>
+            -->
+            <button data-publicationid="###publicationid###" type="button" class="btn btn-primary btn-xs pull-right like">
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Me gusta
+            </button>
+        </h2>
     </div>
     <div class="panel-body">
         ###body###
@@ -8,7 +16,7 @@
     <div class="panel-footer">
         <div class="row">
             <div class="col-md-2 col-md-offset-10">
-                <small class="pull-right"><a class="btn btn-primary btn-xs" href="/index.php?target=profile&userid=###userid###">###contributor###</a></small>
+                <small class="pull-right"><a class="btn btn-info btn-xs" href="/index.php?target=profile&userid=###userid###">###contributor###</a></small>
             </div>
         </div>
     </div>

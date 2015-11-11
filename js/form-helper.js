@@ -1,8 +1,9 @@
+/*
 audiojs.events.ready(function() {
     var as = audiojs.createAll();
 });
 
-/*
+
 function loopAudio(obj) {
     var audioPlayer = obj;
     setTimeout(function () {
@@ -15,37 +16,53 @@ function loopAudio(obj) {
 $(document).ready(function() {
 
     $('.musas-home').each(function(k,v){
-        var leftPos = (Math.random() * $('#musas-wrapper').width()) + 1 - $(v).find('.musa-name').width() - 50;
+        var musasWrapperObj = $('#musas-wrapper');
+        var leftPos = (Math.random() * musasWrapperObj.width()) + 1 - $(v).find('.musa-name').width() - 50;
         if (leftPos < 0) leftPos = 0;
         $(v).css('left', leftPos);
-        $(v).css('top', -(Math.random() * $('#musas-wrapper').height()) + 1 - $('#musas-wrapper').height());
+        $(v).css('top', -(Math.random() * musasWrapperObj.height()) + 1 - musasWrapperObj.height());
         loop($(v));
     });
 
     function loop(obj) {
         obj.animate ({
-            top: $('#musas-wrapper').height(),
+            top: $('#musas-wrapper').height()
         }, 12000, 'linear', function() {
             obj.animate({top: 0}, 1, 'linear', function(){
-                var leftPos = (Math.random() * $('#musas-wrapper').width()) + 1 - obj.find('.musa-name').width() - 50;
+                var musasWrapperObj = $('#musas-wrapper');
+                var leftPos = (Math.random() * musasWrapperObj.width()) + 1 - obj.find('.musa-name').width() - 50;
                 if (leftPos < 0) leftPos = 0;
                 obj.css('left', leftPos);
-                obj.css('top', -(Math.random() * $('#musas-wrapper').height()) + 1 - $('#musas-wrapper').height());
+                obj.css('top', -(Math.random() * musasWrapperObj.height()) + 1 - musasWrapperObj.height());
                 loop(obj);
             });
         });
     }
 
-    $('.musa-name').click(function(){
+    var musaObj = $('.musa-name');
+    musaObj.click(function(){
         var musaId = $(this).attr('id');
         var musaName = $(this).text();
         window.location.replace("/?target=get-publications&id=" + musaId + "&name=" + musaName);
     });
 
-    $('.musa-name').hover(function(){
+    musaObj.hover(function(){
         $(this).parent().parent().stop(true, false);
     },function(){
         loop($(this).parent().parent());
+    });
+
+    $(".like").click(function(){
+        var publicationId = $(this).data('publicationid');
+        $.ajax({
+            method: "POST",
+            url: "index.php?target=like-writting",
+            data: { publicationId:  publicationId}
+        }).done(function(result) {
+            if (0 == result) {
+                alert("Gracias por participar.");
+            }
+        });
     });
 
     (function ( $ ) {
@@ -62,11 +79,12 @@ $(document).ready(function() {
             $(this).html(currentMusa);
             $("#musas-like").html('');
             $("#musa").val('');
-            var musasListId = $("#musasIdList").val();
+            var musasListObj = $("#musasIdList");
+            var musasListId = musasListObj.val();
             if (musasListId != '') {
-                $("#musasIdList").val(musasListId + ',' + musa.id);
+                musasListObj.val(musasListId + ',' + musa.id);
             } else {
-                $("#musasIdList").val(musa.id);
+                musasListObj.val(musa.id);
             }
         };
     }( jQuery ));
@@ -81,8 +99,10 @@ $(document).ready(function() {
         }
     });
 
-    $("#selectmusas-wrapper").on('click', '.remove-musa', function(){
-        var musasList = $("#musasIdList").val();
+    var musasWrapperObj = $("#selectmusas-wrapper");
+    musasWrapperObj.on('click', '.remove-musa', function(){
+        var musasListObj = $("#musasIdList");
+        var musasList = musasListObj.val();
         var musasListId = '';
         var musaId = $(this).attr('id');
 
@@ -95,16 +115,17 @@ $(document).ready(function() {
                 }
             }
         });
-        $("#musasIdList").val(musasListId);
+        musasListObj.val(musasListId);
         $(this).parent().remove();
     });
 
-    $("#selectmusas-wrapper").on('click', '.select-musa', function(){
-        var musasList = $("#musas-list").html();
+    musasWrapperObj.on('click', '.select-musa', function(){
+        var musasListObj = $("#musas-list");
+        var musasList = musasListObj.html();
         var musa = $(this).text();
         var id = $(this).attr('id');
         if (-1 == musasList.indexOf(musa)) {
-            $("#musas-list").addMusa({id:id, name: musa});
+            musasListObj.addMusa({id:id, name: musa});
         } else {
             $("#musa").val('');
             $("#musas-like").html('');
@@ -138,11 +159,12 @@ $(document).ready(function() {
                     url: "index.php?target=search-musa",
                     data: { str:  $(this).val()}
                 }).done(function(result) {
-                    if (result.length != 0) {
+                    if (result.length == 0) {
+                    } else {
                         var jsonData = jQuery.parseJSON(result);
                         var potentialMatch = "<ul class='list-group'>";
-                        for(var id in jsonData) {
-                            potentialMatch = potentialMatch + "<li class='list-group-item list-group-item-success select-musa' id='"+id+"'>"
+                        for (var id in jsonData) {
+                            potentialMatch = potentialMatch + "<li class='list-group-item list-group-item-success select-musa' id='" + id + "'>"
                                 + jsonData[id]
                                 + "<span class='glyphicon glyphicon-ok pull-right'></span></li>";
                         }
@@ -151,7 +173,7 @@ $(document).ready(function() {
                     }
                 });
             }
-        };
+        }
     });
 
 });
