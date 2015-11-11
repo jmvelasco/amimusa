@@ -325,7 +325,11 @@ switch ($target) {
                 } else {
                     header('Location: /?target=user-contributions&status=1');
                 }
+            } else {
+                $errorCode = 23460;
+                header('Location: /?target=error-handler&error-code='.$errorCode);
             }
+
 
 
         }
